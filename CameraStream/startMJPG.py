@@ -1,8 +1,44 @@
 from subprocess import check_output, CalledProcessError, call, Popen
 from time import sleep, time, strftime, gmtime
+from networktables import NetworkTables
+
 success = [False, False]
 already_success = [False, False]
+inoperable = [False, False]
+
 def check_stream(device):
+    global inoperable
+    if not inoperable:
+        for i in range(0,4):
+            if i == 0 and not already_success[device]:
+                start_stream(device)
+            else:
+                try:
+                    log = '\nTest'
+                    curr_time = strftime('%H:%M:%S', gmtime())
+                    check_stream_cmd = 'pgrep -f device{}'.format(device).split()
+                    sleep(1)
+                    check_output(check_stream_cmd)
+                    log = 'Time: {1} Camera {0}: Stream successful.'.format(device, curr_time)
+                    success[device] = True
+                except CalledProcessError:
+                    log = 'Time: {2} Camera {0}: Stream failed. Attempt {1}'.format(device, i, curr_time)
+                    success[device] = False
+                finally:
+                    if not already_success[device]:
+                        with open('/home/pi/CameraStream/logs/camera_log.txt', 'a') as logfile:
+                            logfile.write(log + '\n')
+                    if success[device]:
+                        already_success[device] = True
+                        return
+                    else:
+                        already_success[device] = False
+                        start_stream(device)
+                        sleep(1)
+        inoperable[device] = True
+
+
+def check_stream_reboot(device):
     global success
     global already_success
     
@@ -81,7 +117,6 @@ def check_stream(device):
             reboot_cmd = 'sudo shutdown -r now'.split()
             call(reboot_cmd)
 
-
 def start_stream(device):
     stream_start_cmd = 'sh device{}.sh'.format(device)
     Popen(stream_start_cmd.split())
@@ -90,10 +125,41 @@ def start_stream(device):
 def kill_stream(device):
     stream_kill_cmd = 'sudo pkill -f video{}'.format(device).split()
     call(stream_kill_cmd)
+    
 
 
 if __name__ == '__main__':
-    sleep(5)
-    while(True):
-        check_stream(0)
+    front_device = 0
+    back_device = 1
+    
+    NetworkTables.initialize('roboRIO-245-FRC.local')
+    controls = NetworkTables.getTable('Controls')
 
+    auton_time = None
+            
+    while(True):
+        sleep(.001)
+        if(controls['auton'] and auton_time is None):
+            auton_time = time()
+        try:
+            if(time() <= auton_time + 16):
+               continue
+        except TypeError:
+            if controls['auton']:
+                continue
+        finally:
+            check_stream_reboot(front)
+            if(controls['stream'] == 'front')
+                kill_stream(back_device)
+                check_stream(front_device)
+            if(controls['stream'] == 'back')
+                kill_stream(front_device)
+                check_stream(back_device)
+            
+            
+        
+        
+               
+            
+               
+            

@@ -50,7 +50,7 @@ def create_files():
                         '\ncd ..'
                         '\necho "00" >> reboot0.txt'
                         '\necho "00" >> reboot1.txt'
-                        '\necho "" >> reboot_time.txt')
+                        '\necho "0" >> reboot_time.txt')
     create_run_delete(create_file_cmds)
     device0_cmd = 'sudo /usr/local/bin/mjpg_streamer -i "/usr/local/lib/input_uvc.so -d /dev/video0 -y" -o "/usr/local/lib/output_http.so -w /usr/local/www -p 80"'
     create_sh('device0', device0_cmd, create_path)
