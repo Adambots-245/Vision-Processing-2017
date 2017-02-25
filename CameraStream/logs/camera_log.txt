@@ -1,0 +1,54 @@
+CAMERA LOGS
+Time: 17:59:11 Camera 0: Stream successful.
+Time: 18:17:11 Camera 0: Stream successful.
+Time: 18:17:11 Camera 0: Stream successful.
+Time: 18:17:10 Camera 0: Stream successful.
+Time: 18:17:10 Camera 0: Stream successful.
+Time: 18:17:10 Camera 0: Stream successful.
+Time: 18:17:11 Camera 0: Stream successful.
+Time: 18:17:11 Camera 0: Stream successful.
+Time: 18:17:11 Camera 0: Stream successful.
+Time: 18:20:52 Camera 0: Stream failed. Attempt 1
+Time: 18:20:55 Camera 0: Stream failed. Attempt 2
+Time: 18:20:57 Camera 0: Stream failed. Attempt 3
+Time: 18:20:57 Camera 0: Streaming failed 3 times, reboot 1.
+Time: 18:21:10 Camera 0: Stream failed. Attempt 1
+Time: 18:21:12 Camera 0: Stream failed. Attempt 2
+Time: 18:21:14 Camera 0: Stream failed. Attempt 3
+Time: 18:21:14 Camera 0: Streaming failed 3 times, reboot 2.
+Time: 18:21:27 Camera 0: Stream failed. Attempt 1
+Time: 18:21:29 Camera 0: Stream failed. Attempt 2
+Time: 18:21:31 Camera 0: Stream failed. Attempt 3
+Time: 18:21:31 Camera 0: Streaming failed 3 times, reboot 3.
+Time: 18:21:44 Camera 0: Stream failed. Attempt 1
+Time: 18:21:46 Camera 0: Stream failed. Attempt 2
+Time: 20:39:08 Camera 0: Stream successful.
+Time: 20:39:08 Camera 0: Stream successful.
+Time: 20:57:59 Camera 0: Stream failed. Attempt 1
+Time: 20:58:01 Camera 0: Stream successful.
+Time: 20:39:07 Camera 0: Stream failed. Attempt 1
+Time: 20:39:09 Camera 0: Stream failed. Attempt 2
+Time: 20:39:11 Camera 0: Stream failed. Attempt 3
+Time: 20:39:11 Camera 0: Streaming failed 3 times, reboot 1.
+Time: 20:39:24 Camera 0: Stream failed. Attempt 1
+Time: 20:39:26 Camera 0: Stream failed. Attempt 2
+Time: 20:39:28 Camera 0: Stream failed. Attempt 3
+Time: 20:39:28 Camera 0: Streaming failed 3 times, reboot 2.
+Time: 20:39:41 Camera 0: Stream failed. Attempt 1
+Time: 20:39:43 Camera 0: Stream failed. Attempt 2
+Time: 20:39:45 Camera 0: Stream failed. Attempt 3
+Time: 20:39:45 Camera 0: Streaming failed 3 times, reboot 3.
+Time: 20:39:57 Camera 0: Stream failed. Attempt 1
+Time: 20:39:59 Camera 0: Stream failed. Attempt 2
+Time: 20:40:01 Camera 0: Stream failed. Attempt 3
+Time: 20:40:01 Camera 0: Camera inoperable.
+Time: 23:51:18 Camera 0: Stream failed. Attempt 1
+Time: 23:51:20 Camera 0: Stream failed. Attempt 2
+Time: 23:51:22 Camera 0: Stream failed. Attempt 3
+Time: 23:51:22 Camera 0: Streaming failed 3 times, reboot 1.
+Time: 23:51:37 Camera 0: Stream failed. Attempt 1
+Time: 23:51:39 Camera 0: Stream failed. Attempt 2
+Time: 23:51:41 Camera 0: Stream failed. Attempt 3
+Time: 23:51:41 Camera 0: Streaming failed 3 times, reboot 2.
+Time: 23:51:54 Camera 0: Stream failed. Attempt 1
+Time: 23:51:56 Camera 0: Stream failed. Attempt 2

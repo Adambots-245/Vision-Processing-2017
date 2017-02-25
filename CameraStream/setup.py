@@ -39,7 +39,7 @@ def install_MJPG():
 
 
 def create_files():
-    create_path = '/home/pi/CameraStream/'
+    create_path = '/home/pi/Vision-Processing-2017/CameraStream/'
     create_file_cmds = ('#!/bin/bash'
                         '\ncd /home/pi'
                         '\nmkdir CameraStream'
@@ -48,7 +48,9 @@ def create_files():
                         '\ncd logs'
                         '\necho "CAMERA LOG" >> camera_log.txt'
                         '\ncd ..'
-                        '\necho "0" >> reboot.txt')
+                        '\necho "00" >> reboot0.txt'
+                        '\necho "00" >> reboot1.txt'
+                        '\necho "0" >> reboot_time.txt')
     create_run_delete(create_file_cmds)
     device0_cmd = 'sudo /usr/local/bin/mjpg_streamer -i "/usr/local/lib/input_uvc.so -d /dev/video0 -y" -o "/usr/local/lib/output_http.so -w /usr/local/www -p 80"'
     create_sh('device0', device0_cmd, create_path)
@@ -56,7 +58,7 @@ def create_files():
     create_sh('device1', device1_cmd, create_path)
     launcher_cmds = ('#!/bin/bash'
                      '\ncd /'
-                     '\ncd home/pi/CameraStream/'
+                     '\ncd home/pi/Vision-Processing-2017/CameraStream/'
                      '\nsudo python startMJPG.py'
                      '\ncd /')
     create_sh('launcher', launcher_cmds)
@@ -65,7 +67,7 @@ def create_files():
                     '\nsudo pkill -f mjpg')
     create_sh('disable', disable_cmds)
     permissions_cmd = ('#!/bin/bash'
-                       '\nfor f in /home/pi/CameraStream/*.sh'
+                       '\nfor f in /home/pi/Vision-Processing-2017/CameraStream/*.sh'
                        '\ndo'
                        '\n    sudo chmod 755 "$f"'
                        '\ndone')
@@ -73,7 +75,7 @@ def create_files():
 
 
 def create_reboot():
-    job = '@reboot sh /home/pi/CameraStream/launcher.sh >/home/pi/CameraStream/logs/cronlog 2>&1'
+    job = '@reboot sh /home/pi/Vision-Processing-2017/CameraStream/launcher.sh >/home/pi/CameraStream/logs/cronlog 2>&1'
     cronjob_cmd = '(sudo crontab -l ; echo "{}")| sudo crontab -'.format(job)
     create_run_delete(cronjob_cmd)
 
