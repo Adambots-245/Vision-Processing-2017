@@ -26,7 +26,7 @@ def check_stream(device):
                     success[device] = False
                 finally:
                     if not already_success[device]:
-                        with open('/home/pi/CameraStream/logs/camera_log.txt', 'a') as logfile:
+                        with open('/home/pi/Vision-Processing-2017/CameraStream/logs/camera_log.txt', 'a') as logfile:
                             logfile.write(log + '\n')
                     if success[device]:
                         already_success[device] = True
@@ -42,8 +42,8 @@ def check_stream_reboot(device):
     global success
     global already_success
     
-    with open('/home/pi/CameraStream/reboot{}.txt'.format(device),'r+') as reboot_file:
-        with open('/home/pi/CameraStream/reboot_time.txt','r') as reboot_time_file:
+    with open('/home/pi/Vision-Processing-2017/CameraStream/reboot{}.txt'.format(device),'r+') as reboot_file:
+        with open('/home/pi/Vision-Processing-2017/CameraStream/reboot_time.txt','r') as reboot_time_file:
             reboot_time_file.seek(0)
             reboot_time = int(reboot_time_file.readline())
             if time() - reboot_time > 200:
@@ -51,7 +51,7 @@ def check_stream_reboot(device):
                     reboot_file.write('00')
                         
     inoperable = False
-    with open('/home/pi/CameraStream/reboot{}.txt'.format(device),'r') as reboot_file:
+    with open('/home/pi/Vision-Processing-2017/CameraStream/reboot{}.txt'.format(device),'r') as reboot_file:
         reboot_file.seek(1)
         if(int(reboot_file.read(1)) == 1):
             inoperable = True
@@ -74,27 +74,29 @@ def check_stream_reboot(device):
                     success[device] = False
                 finally:
                     if not already_success[device]:
-                        with open('/home/pi/CameraStream/logs/camera_log.txt', 'a') as logfile:
+                        with open('/home/pi/Vision-Processing-2017/CameraStream/logs/camera_log.txt', 'a') as logfile:
                             logfile.write(log + '\n')
                     if success[device]:
-                        with open('/home/pi/CameraStream/reboot{}.txt'.format(device), 'w') as reboot_file:
+                        with open('/home/pi/Vision-Processing-2017/CameraStream/reboot{}.txt'.format(device), 'w') as reboot_file:
                             reboot_file.seek(0)
                             reboot_file.write('00')
                         already_success[device] = True
+                        controls['camera[]'.format(device)] = True
                         return
                     else:
                         already_success[device] = False
+                        controls['camera[]'.format(device)] = False
                         start_stream(device)
                         sleep(1)
 
         reboot = None
         reboot_time = 0
-        with open('/home/pi/CameraStream/reboot_time.txt','r') as reboot_time_file:
+        with open('/home/pi/Vision-Processing-2017/CameraStream/reboot_time.txt','r') as reboot_time_file:
             reboot_time_file.seek(0)
             reboot_time = int(reboot_time_file.readline())
-        with open('/home/pi/CameraStream/logs/camera_log.txt','a') as logfile:
-            with open('/home/pi/CameraStream/reboot{}.txt'.format(device),'r+') as reboot_file:
-                with open('/home/pi/CameraStream/reboot_time.txt','r') as reboot_time_file:
+        with open('/home/pi/Vision-Processing-2017/CameraStream/logs/camera_log.txt','a') as logfile:
+            with open('/home/pi/Vision-Processing-2017/CameraStream/reboot{}.txt'.format(device),'r+') as reboot_file:
+                with open('/home/pi/Vision-Processing-2017/CameraStream/reboot_time.txt','r') as reboot_time_file:
                     if time() - reboot_time > 40:
                         reboot_file.seek(0)
                         reboot_file.write('00')
@@ -112,7 +114,7 @@ def check_stream_reboot(device):
                     reboot = False
 
         if reboot:
-            with open('/home/pi/CameraStream/reboot_time.txt','w') as reboot_time_file:
+            with open('/home/pi/Vision-Processing-2017/CameraStream/reboot_time.txt','w') as reboot_time_file:
                 reboot_time_file.write(str(int(time())))
             reboot_cmd = 'sudo shutdown -r now'.split()
             call(reboot_cmd)
