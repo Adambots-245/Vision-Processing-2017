@@ -8,7 +8,7 @@ inoperable = [False, False]
 
 def check_stream(device):
     global inoperable
-    if not inoperable:
+    if not inoperable[device]:
         for i in range(0,4):
             if i == 0 and not already_success[device]:
                 start_stream(device)
@@ -49,6 +49,7 @@ def check_stream_reboot(device):
             if time() - reboot_time > 200:
                     reboot_file.seek(0)
                     reboot_file.write('00')
+
                         
     inoperable = False
     with open('/home/pi/Vision-Processing-2017/CameraStream/reboot{}.txt'.format(device),'r') as reboot_file:
@@ -56,7 +57,6 @@ def check_stream_reboot(device):
         if(int(reboot_file.read(1)) == 1):
             inoperable = True
     if not inoperable:
-        
         for i in range(0,4):
             if i == 0 and not already_success[device]:
                 start_stream(device)
@@ -81,11 +81,11 @@ def check_stream_reboot(device):
                             reboot_file.seek(0)
                             reboot_file.write('00')
                         already_success[device] = True
-                        controls['camera[]'.format(device)] = True
+                        controls.putBoolean('camera[]'.format(device), True)
                         return
                     else:
                         already_success[device] = False
-                        controls['camera[]'.format(device)] = False
+                        controls.putBoolean('camera[]'.format(device), False)
                         start_stream(device)
                         sleep(1)
 
@@ -131,33 +131,53 @@ def kill_stream(device):
 
 
 if __name__ == '__main__':
+    sleep(3)
     front_device = 0
+    """
     back_device = 1
-    
+    first_front = True
+    first_back = True
+    """
     NetworkTables.initialize('roboRIO-245-FRC.local')
     controls = NetworkTables.getTable('Controls')
-
+    """
     auton_time = None
-            
+    first_loop = True
+
+    check_stream_reboot(front_device)
+    previous_state = 'front'
     while(True):
         sleep(.001)
-        if(controls['auton'] and auton_time is None):
-            auton_time = time()
+        try:
+            if(controls.getBoolean('auton') and auton_time is None):
+                auton_time = time()
+        except KeyError:
+                continue
         try:
             if(time() <= auton_time + 16):
                continue
         except TypeError:
-            if controls['auton']:
+            if(controls.getBoolean('auton')):
                 continue
         finally:
-            check_stream_reboot(front)
-            if(controls['stream'] == 'front')
-                kill_stream(back_device)
-                check_stream(front_device)
-            if(controls['stream'] == 'back')
-                kill_stream(front_device)
-                check_stream(back_device)
-            
+            if(first_loop):
+                check_stream_reboot(front_device)
+                first_loop = False
+            if(controls.getString('stream') == 'front'):
+                if(previous_state == 'front'):
+                    check_stream(front_device)
+                else:
+                    kill_stream(back_device)
+            if(controls.getString('stream') == 'back'):
+                if(previous_state == 'back'):
+                    check_stream(back_device)
+                else:
+                    kill_stream(front_device)
+            previous_state = controls.getString('stream')
+    """
+    while(True):
+        check_stream_reboot(front_device)
+
             
         
         
