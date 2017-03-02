@@ -5,6 +5,8 @@ While connected to the internet, run the setup.py file. This should:
 	3) Configure the Raspberry Pi to run the startMJPG.py script on startup
 After installation is finished, copy the contents of the folder containing this READ_ME to the newly created directory.
 
+NOTE: IGNORE ALL OF THE FOLLOWING, IT IS CURRENTLY NOT TRUE
+
 TO USE:
 On startup the Raspberry Pi should begin the stream, which can be accessed by going to http://yourip:port where 'yourip'
 is the IP of the Raspberry Pi and 'port' is the number following the -p flag in the device0.sh or device1.sh files
